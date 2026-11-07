@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html><head><title>Friction and Differentiable Robot Simulators</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="Friction and Differentiable Robot Simulators"/><meta property="og:description" content="Here’s a method, based on differentiable simulators, to compensate for joint friction (or other unmodelled forces). This post is a proof of concept where I used Google’s Brax, a differentiable physics simulator based on Jax, to correct for unmodelled joint friction in a simple pendulum."/><meta property="og:image" content="https://palafox.info/static/og-image.png?v=2"/><meta property="og:image:width" content="600"/><meta property="og:image:height" content="600"/><meta name="twitter:card" content="summary"/><link rel="icon" href="../static/icon.png?v=2"/><meta name="description" content="Here’s a method, based on differentiable simulators, to compensate for joint friction (or other unmodelled forces). This post is a proof of concept where I used Google’s Brax, a differentiable physics simulator based on Jax, to correct for unmodelled joint friction in a simple pendulum."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="../index.css?v=mw6yr0oy" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Instrument Sans:wght@400;700&amp;family=Instrument Sans:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js?v=mw6yr0oy" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`../static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="research/friction"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"></div><div class="center"><div class="page-header"><header><nav class="site-nav"><a class="home-link" href="..">Fernando Palafox</a><span class="sections"><a href="../#papers">Papers</a><a href="../#blog">Technical Blogposts</a><a href="../#essays">Essays</a></span></nav><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label for="darkmode-toggle" tabIndex="-1"><span class="toggle-knob"></span></label></div><button class="btn back-to-top" aria-label="Back to top" hidden>↑ Top</button></header><div class="popover-hint"><div class="post-header"><div class="kicker">Technical Blogpost <span class="date">· September 15, 2024</span></div><h1 class="article-title">Friction and Differentiable Robot Simulators</h1></div></div></div><article class="popover-hint"><figure style="text-align:center;">
+  <img src="../media/diffsim_intro.png" alt style="width:65%;"/>
+</figure>
+<p>Here’s a method, based on differentiable simulators, to compensate for joint friction (or other unmodelled forces).
+This post is a proof of concept where I used Google’s <a href="https://github.com/google/brax" class="external">Brax</a>, a differentiable physics simulator based on <a href="https://github.com/google/jax" class="external">Jax</a>, to correct for unmodelled joint friction in a simple pendulum.</p>
+<p>This was inspired by discussions with <a href="https://philipzrh.com/" class="external">Ruihan Zhao aka Philip</a>.
+Also, thanks you Jake Levy for with the help with Jax.</p>
+<p><strong>Table of Contents</strong></p>
+<ul>
+<li><a href="#problem" class="internal">Problem</a></li>
+<li><a href="#challenges" class="internal">Challenges</a></li>
+<li><a href="#approach" class="internal">Approach</a></li>
+<li><a href="#data-collection" class="internal">Data collection</a></li>
+<li><a href="#training-the-neural-network" class="internal">Training the neural network</a></li>
+<li><a href="#results" class="internal">Results</a></li>
+<li><a href="#conclusion" class="internal">Conclusion</a></li>
+<li><a href="#code" class="internal">Code</a></li>
+</ul>
+<h1 id="problem">Problem<a aria-hidden="true" tabindex="-1" href="#problem" class="internal"> §</a></h1>
+<p><a href="https://modernrobotics.northwestern.edu/nu-gm-book-resource/11-5-force-control/" class="external">Force controllers</a> are helpful in situations when you want your robot to be compliant.
+For example, when you’re interested in contact-rich tasks or you are operating around humans.
+Unfortunately, they’re very sensitive to unmodelled forces, such as joint friction.
+These forces typically result in degradations in tracking performance.
+This is because there’s no way for the controller to tell whether it’s running into a wall (something it should be compliant to) or joint friction.</p>
+<h1 id="challenges">Challenges<a aria-hidden="true" tabindex="-1" href="#challenges" class="internal"> §</a></h1>
+<p>This problem is challenging because joint friction depends on a ton of variables like:</p>
+<ul>
+<li>Temperature</li>
+<li>Angles</li>
+<li>Velocity</li>
+<li>Loads</li>
+<li>Joint degradation</li>
+</ul>
+<p>One way of solving this problem is to come up with a super high-fidelity friction model for the robot you’re using.
+This approach works kinda well, but it’s typically bespoke and limited to a specific robot.
+We want something more general.</p>
+<h1 id="approach">Approach<a aria-hidden="true" tabindex="-1" href="#approach" class="internal"> §</a></h1>
+<p>Three steps:</p>
+<ol>
+<li>Run a real robot and a simulated robot with no joint friction.</li>
+<li>Send the same commands to both robots and check the differences in states</li>
+<li>Train a neural network to output a torque that minimizes the difference between the states</li>
+</ol>
+<p>Here’s a diagram to get some intuition for how this works:</p>
+<figure style="text-align:center;">
+  <img src="../media/diffsim_plan.png" alt style="width:85%;"/>
+</figure>
+<p>In this post I’ll present a proof of concept where both robots are simulated, but one of them has an added friction force I came up with.</p>
+<h1 id="data-collection">Data collection<a aria-hidden="true" tabindex="-1" href="#data-collection" class="internal"> §</a></h1>
+<figure style="text-align:center;">
+  <img src="../media/diffsim_data.png" alt style="width:85%;"/>
+</figure>
+<p>We collect data using a simulated robot with an added friction force meant to represent a real robot with joint friction.
+We give the robot a random torque command, add friction to each of the joints, and then save the initial state, the final state, and the applied control torque.
+For this proof of concept, the robot is a single pendulum.</p>
+<h1 id="training-the-neural-network">Training the neural network<a aria-hidden="true" tabindex="-1" href="#training-the-neural-network" class="internal"> §</a></h1>
+<p>Once data is collected, I trained a neural network to correct for friction.
+I used a multi-layer perceptron with 4 hidden layers and 256 neurons each.<br/>
+The input layer of the neural network takes in normalized joint positions and velocities from the initial state. <sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label" class="internal">1</a></sup>
+Training is done as follows:</p>
+<ol>
+<li>Sample a tuple from the dataset. Each data tuple contains an initial state, control torque, and a final state.</li>
+<li>Using the initial state, initialize a robot in a simulator (with no friction).</li>
+<li>Apply the control torque and the neural network torque to the robot.</li>
+<li>Compute the loss function by comparing the difference between the final state (from the data) and the resulting state in the simulation</li>
+</ol>
+<p>Reducing loss by adjusting the network parameters essentially means that the networks is learning to imitate the effects of friction.
+So, once the network is trained, if we apply the <em>negative</em> of the learned torque, we should counteract the effects of friction.</p>
+<p>In the diagram below, I also note why it’s important that we use a differentiable simulator.
+In order to propagate loss into changes of the neural network parameters we need to be able to differentiate the simulated state with respect to the neural network parameters.
+This can only be done with a differentiable simulator, as noted in the diagram below.</p>
+<figure style="text-align:center;">
+  <img src="../media/diffsim_train.png" alt style="width:95%;"/>
+</figure>
+<h1 id="results">Results<a aria-hidden="true" tabindex="-1" href="#results" class="internal"> §</a></h1>
+<p><strong>Before</strong></p>
+<p>Here’s a plot showing position error for the end effectors.
+I use a simple PD controller since the dynamical system is very simple.
+Using the same controller, the orange and blue lines show trajectories with and without friction, respectively.
+As expected, the controller without friction has less error.</p>
+<figure style="text-align:center;">
+  <img src="../media/diffsim_before.png" alt style="width:65%;"/>
+</figure>
+<p><strong>After</strong></p>
+<p>Below are the trajectories I got when combining the PD controller and the neural network.
+Green denotes the corrected trajectory.
+Notice how it does such a good job that it almost exactly cancels out the effects of friction, leaving us with a trajectory that almost perfectly overlaps the no-friction trajectory (blue line).</p>
+<figure style="text-align:center;">
+  <img src="../media/diffsim_after.png" alt style="width:65%;"/>
+</figure>
+<h1 id="conclusion">Conclusion<a aria-hidden="true" tabindex="-1" href="#conclusion" class="internal"> §</a></h1>
+<p>This idea looks promising but I still need to figure out the following:</p>
+<p><strong>Coverage.</strong> A pendulum is a very simple dynamical system, so covering the entire state space when collecting data was very easy.
+I just sampled random initial positions for the pendulum and random inputs, and since the robot only has a single joint, I quickly covered the entire state space.
+However, for robots with more joints, the state space will be exponentially larger, and getting good coverage will likely be challenging.</p>
+<p><strong>Architecture.</strong> As the dynamical system gets more complex, we will likely need a better neural network model.</p>
+<p><strong>Sim2real.</strong> It remains to be shown whether this will transfer to a real robot.
+Friction depends on joint temperature which typically changes as you operate the robot.
+This time-dependence may interfere with the data collection and/or learning process.</p>
+<p><strong>Safety.</strong> Adding an extra torque that’s “blind” to contact may violate safety limitations and remove some of the benefits of force control.</p>
+<h1 id="code">Code<a aria-hidden="true" tabindex="-1" href="#code" class="internal"> §</a></h1>
+<p><a href="https://github.com/CLeARoboticsLab/friction-estimator" class="external">Link to the GitHub repo</a>.
+Take a look at the scripts folder and/or contact me if you have any questions.</p>
+<section data-footnotes class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes<a aria-hidden="true" tabindex="-1" href="#footnote-label" class="internal"> §</a></h2>
+<ol>
+<li id="user-content-fn-1">
+<p>Normalization is done using averages and standard deviations from the collected dataset. <a href="#user-content-fnref-1" data-footnote-backref class="data-footnote-backref internal" aria-label="Back to content">↩</a></p>
+</li>
+</ol>
+</section></article><nav class="pager" aria-label="More posts"><a class="prev" href="../research/hello_gpt"><span class="dir">← Previous</span><span class="t">GPTs</span></a><a class="next" href="../research/dvae_elbo"><span class="dir">Next →</span><span class="t">The Loss of a Dynamical VAE</span></a></nav></div><div class="right sidebar"></div></div></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="../postscript.js?v=mw6yr0oy" type="module"></script></html>

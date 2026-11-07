@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head><title>Bookshelf</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="Bookshelf"/><meta property="og:description" content="Some of my favorite books in no particular order. Fun Books § Rainer Maria Rilke Letters to a Young Poet David Foster Wallace Infinite Jest James P. Carse Finite and Infinite Games Douglas Hofstadter I Am a Strange Loop Robert Persig Zen and the Art of Motorcycle Maintenance Mark Manson Models Fyodor Dostoevsky Crime and Punishment Isaac Asimov The Foundation series Neal Stephenson Snow Crash Henry David Thoreu Walden Charlie Awberry Opening Awareness D."/><meta property="og:image" content="https://palafox.info/static/og-image.png?v=2"/><meta property="og:image:width" content="600"/><meta property="og:image:height" content="600"/><meta name="twitter:card" content="summary"/><link rel="icon" href="./static/icon.png?v=2"/><meta name="description" content="Some of my favorite books in no particular order. Fun Books § Rainer Maria Rilke Letters to a Young Poet David Foster Wallace Infinite Jest James P. Carse Finite and Infinite Games Douglas Hofstadter I Am a Strange Loop Robert Persig Zen and the Art of Motorcycle Maintenance Mark Manson Models Fyodor Dostoevsky Crime and Punishment Isaac Asimov The Foundation series Neal Stephenson Snow Crash Henry David Thoreu Walden Charlie Awberry Opening Awareness D."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="./index.css?v=mw6yr0oy" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Instrument Sans:wght@400;700&amp;family=Instrument Sans:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js?v=mw6yr0oy" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`./static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="bookshelf"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"></div><div class="center"><div class="page-header"><header><nav class="site-nav"><a class="home-link" href=".">Fernando Palafox</a><span class="sections"><a href="./#papers">Papers</a><a href="./#blog">Technical Blogposts</a><a href="./#essays">Essays</a></span></nav><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label for="darkmode-toggle" tabIndex="-1"><span class="toggle-knob"></span></label></div><button class="btn back-to-top" aria-label="Back to top" hidden>↑ Top</button></header><div class="popover-hint"><div class="post-header"><h1 class="article-title">Bookshelf</h1></div></div></div><article class="popover-hint"><p>Some of my favorite books in no particular order.</p>
+<h2 id="fun-books">Fun Books<a aria-hidden="true" tabindex="-1" href="#fun-books" class="internal"> §</a></h2>
+<p><strong>Rainer Maria Rilke</strong> <em>Letters to a Young Poet</em><br/>
+<strong>David Foster Wallace</strong> <em>Infinite Jest</em><br/>
+<strong>James P. Carse</strong> <em>Finite and Infinite Games</em><br/>
+<strong>Douglas Hofstadter</strong> <em>I Am a Strange Loop</em><br/>
+<strong>Robert Persig</strong> <em>Zen and the Art of Motorcycle Maintenance</em><br/>
+<strong>Mark Manson</strong> <em>Models</em><br/>
+<strong>Fyodor Dostoevsky</strong> <em>Crime and Punishment</em><br/>
+<strong>Isaac Asimov</strong> The <em>Foundation</em> series<br/>
+<strong>Neal Stephenson</strong> <em>Snow Crash</em> <br/>
+<strong>Henry David Thoreu</strong> <em>Walden</em><br/>
+<strong>Charlie Awberry</strong> <em>Opening Awareness</em><br/>
+<strong>D.E. Harding</strong> <em>On Having No Head</em></p>
+<h2 id="serious-books">“Serious” Books<a aria-hidden="true" tabindex="-1" href="#serious-books" class="internal"> §</a></h2>
+<p><strong>David Deutsch</strong> <em>The Beginning of Infinity</em><br/>
+<strong>Thomas S. Kuhn</strong> <em>The Structure of Scientific Revolutions</em><br/>
+<strong>Bruce Tift</strong> <em>Already Free</em><br/>
+<strong>Nassim Taleb</strong> <em>Fooled by Randomness</em><br/>
+<strong>Henry Hazlitt</strong> <em>Economics in One Lesson</em><br/>
+<strong>Richard Dawkins</strong> <em>The Selfish Gene</em><br/>
+<strong>C.S. Lewis</strong> <em>Mere Christianity</em><br/>
+<strong>Luke Burgis</strong> <em>Wanting</em><br/>
+<strong>Cal Newport</strong> <em>Deep Work</em><br/>
+<strong>Peter Thiel</strong> <em>Zero to One</em><br/>
+<strong>Dale Carnegie</strong> <em>How to Win Friend and Influence People</em><br/>
+<strong>Friedrich Nietzche</strong> <em>Beyond Good and Evil</em></p>
+<hr/>
+<p>Inspired by <a href="https://patrickcollison.com/bookshelf" class="external">Patrick Collison’s blog</a>.</p></article></div><div class="right sidebar"></div></div></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="./postscript.js?v=mw6yr0oy" type="module"></script></html>

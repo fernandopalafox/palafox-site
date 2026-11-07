@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html><head><title>Movement</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="Movement"/><meta property="og:description" content="On the joys of movement and stillness Exercise § I’m a big fan of physical movement. In a previous life, I was a obsessed with ultra-distance cycling and running."/><meta property="og:image" content="https://palafox.info/static/og-image.png?v=2"/><meta property="og:image:width" content="600"/><meta property="og:image:height" content="600"/><meta name="twitter:card" content="summary"/><link rel="icon" href="./static/icon.png?v=2"/><meta name="description" content="On the joys of movement and stillness Exercise § I’m a big fan of physical movement. In a previous life, I was a obsessed with ultra-distance cycling and running."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="./index.css?v=mw6yr0oy" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Instrument Sans:wght@400;700&amp;family=Instrument Sans:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js?v=mw6yr0oy" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`./static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="movement"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"></div><div class="center"><div class="page-header"><header><nav class="site-nav"><a class="home-link" href=".">Fernando Palafox</a><span class="sections"><a href="./#papers">Papers</a><a href="./#blog">Technical Blogposts</a><a href="./#essays">Essays</a></span></nav><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label for="darkmode-toggle" tabIndex="-1"><span class="toggle-knob"></span></label></div><button class="btn back-to-top" aria-label="Back to top" hidden>↑ Top</button></header><div class="popover-hint"><div class="post-header"><h1 class="article-title">Movement</h1></div></div></div><article class="popover-hint"><p><em>On the joys of movement and stillness</em></p>
+<h3 id="exercise">Exercise<a aria-hidden="true" tabindex="-1" href="#exercise" class="internal"> §</a></h3>
+<p>I’m a big fan of physical movement.
+In a previous life, I was a obsessed with <a href="https://en.wikipedia.org/wiki/Ultra-distance_cycling" class="external">ultra-distance</a> cycling and running.
+Here are some examples: <a href="https://www.strava.com/activities/7133415452" class="external">Boulder to Vail</a>, <a href="https://www.strava.com/activities/7256188457" class="external">Unbound 200</a>, <a href="https://www.strava.com/activities/3748687548" class="external">Boulder to Winterpark (aka Indian Peaks Traverse)</a>, <a href="https://www.strava.com/activities/8737219081" class="external">East Texas Showdown</a>, <a href="https://www.strava.com/activities/7348087456" class="external">Boulder to Canada (aka Tour de Croc)</a>, <a href="https://www.strava.com/activities/2493582344/overview" class="external">Coeur d’Alene Half-Ironman</a>, <a href="https://www.strava.com/activities/10392341102" class="external">Run across Singapore</a>.
+I was fighting some demons ;)</p>
+<p>These days I’m a lot more relaxed about things, and I focus on community and having a good time.
+This typically means ~3 lifts a week, ~3 runs a week, 1-2 days of yoga or dancing (two-stepping in Austin is incredible), and lots of walking.
+I love walking (especially with friends).</p>
+<p>Sometimes I’ll train for a race (I really enjoy trail half-marathons).
+Sometimes I’ll bulk.
+Sometimes I’ll cut. But the focus is always on feeling good instead of chasing random metrics.</p>
+<h3 id="meditation">Meditation<a aria-hidden="true" tabindex="-1" href="#meditation" class="internal"> §</a></h3>
+<p>I try to meditate ~30min a day.
+Sometimes more.
+Sometimes less.
+Sometimes I use <a href="https://www.wakingup.com/" class="external">Waking Up</a> or <a href="https://www.thewayapp.com/" class="external">The Way.</a>
+Some days just a timer.
+<strong>Nothing has had a bigger impact on my happiness than my meditation practice.</strong>
+I highly recommend it.</p>
+<p>I used to be overweight and depressed.
+Movement and meditation changed my life in incredibly positive ways.
+If any of the above speaks to you, and you’d like to learn more, reach out to me :)</p>
+<h3 id="metrics">Metrics<a aria-hidden="true" tabindex="-1" href="#metrics" class="internal"> §</a></h3>
+<p>In a previous life, I was obsessed with measuring things.
+For an example, see <a href="./fitness_old" class="internal">the previous version of this page</a>.
+These days I’m a lot more relaxed about things.
+However, some things are still worth tracking and I get body compositions exams and bloodwork a couple times a year.
+Here’s my body composition over the past couple of years:</p>
+<div style="max-width:650px;margin:2em auto;">
+  <canvas id="bodycomp-chart"></canvas>
+</div>
+<script>
+(function() {
+  var data = {
+    labels: ['Jul 2023', 'Dec 2023', 'Feb 2024', 'Apr 2024', 'Aug 2024', 'Jun 2025', 'Aug 2025', 'Dec 2025', 'Feb 2026'],
+    fatPct: [20.2, 17.7, 18.0, 14.5, 16.1, 18.5, 15.0, 15.7, 17.8],
+    leanMass: [133.1, 141.6, 143.7, 145.1, 146.7, 140.0, 145.8, 145.2, 147.6],
+    fatMass: [35.3, 31.9, 32.9, 25.8, 29.4, 33.3, 26.9, 28.4, 33.5],
+    totalMass: [175.0, 180.0, 183.2, 177.4, 182.9, 180.2, 179.7, 180.7, 188.3]
+  };
+
+  function createChart() {
+    var canvas = document.getElementById('bodycomp-chart');
+    if (!canvas) return;
+
+    var cs = getComputedStyle(document.documentElement);
+    var txt = cs.getPropertyValue('--dark').trim() || '#333';
+    var grid = cs.getPropertyValue('--lightgray').trim() || '#e0e0e0';
+
+    new Chart(canvas, {
+      type: 'line',
+      data: {
+        labels: data.labels,
+        datasets: [
+          {
+            label: 'Body Fat %',
+            data: data.fatPct,
+            borderColor: 'rgb(210, 70, 70)',
+            backgroundColor: 'rgba(210, 70, 70, 0.07)',
+            yAxisID: 'yFat',
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            borderWidth: 2.5,
+            fill: true
+          },
+          {
+            label: 'Lean Mass (lbs)',
+            data: data.leanMass,
+            borderColor: 'rgb(60, 130, 200)',
+            backgroundColor: 'rgba(60, 130, 200, 0.07)',
+            yAxisID: 'yLean',
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            borderWidth: 2.5,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: { duration: 1500, easing: 'easeInOutQuart' },
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: txt, font: { size: 13 } } },
+          tooltip: {
+            callbacks: {
+              afterBody: function(ctx) {
+                var i = ctx[0].dataIndex;
+                return 'Fat Mass: ' + data.fatMass[i] + ' lbs\nTotal Weight: ' + data.totalMass[i] + ' lbs';
+              }
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { color: txt }, grid: { color: grid } },
+          yFat: {
+            type: 'linear',
+            position: 'left',
+            title: { display: true, text: 'Body Fat %', color: txt },
+            min: 12, max: 22,
+            ticks: { color: txt },
+            grid: { color: grid }
+          },
+          yLean: {
+            type: 'linear',
+            position: 'right',
+            title: { display: true, text: 'Lean Mass (lbs)', color: txt },
+            min: 128, max: 150,
+            ticks: { color: txt },
+            grid: { drawOnChartArea: false }
+          }
+        }
+      }
+    });
+  }
+
+  function init() {
+    if (typeof Chart !== 'undefined') {
+      createChart();
+    } else {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/chart.js@4';
+      s.onload = createChart;
+      document.head.appendChild(s);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+<h3 id="words">Words<a aria-hidden="true" tabindex="-1" href="#words" class="internal"> §</a></h3>
+<p>Here are some quotes about movement and exercise that I like:</p>
+<blockquote>
+<p>“Ultimately morale is physical. You think with your body, so it’s important to take care of it. That means exercising regularly, eating and sleeping well, and avoiding the more dangerous kinds of drugs. Running and walking are particularly good forms of exercise because they’re good for thinking.” - Paul Graham in <a href="http://www.paulgraham.com/greatwork.html" class="external">How To Do Great Work</a></p>
+</blockquote>
+<blockquote>
+<p>“Sit as little as possible; do not believe any idea that was not born in the open air and of free movement […] Sitting still [is] the real sin against the Holy Ghost.” - Friedrich Nietzsche</p>
+</blockquote>
+<hr/>
+<p>Last updated 01/2026</p></article></div><div class="right sidebar"></div></div></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="./postscript.js?v=mw6yr0oy" type="module"></script></html>

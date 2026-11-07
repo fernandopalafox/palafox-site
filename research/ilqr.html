@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html><head><title>Iterative Linear Quadratic Regulators in JAX</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="Iterative Linear Quadratic Regulators in JAX"/><meta property="og:description" content="A couple months ago I wrote an iLQR solver in JAX and today I decided to open-source it. I used Claude Code for the first time and I’ve never moved so fast in my life."/><meta property="og:image" content="https://palafox.info/static/og-image.png?v=2"/><meta property="og:image:width" content="600"/><meta property="og:image:height" content="600"/><meta name="twitter:card" content="summary"/><link rel="icon" href="../static/icon.png?v=2"/><meta name="description" content="A couple months ago I wrote an iLQR solver in JAX and today I decided to open-source it. I used Claude Code for the first time and I’ve never moved so fast in my life."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="../index.css?v=mw6yr0oy" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Instrument Sans:wght@400;700&amp;family=Instrument Sans:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js?v=mw6yr0oy" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`../static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="research/ilqr"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"></div><div class="center"><div class="page-header"><header><nav class="site-nav"><a class="home-link" href="..">Fernando Palafox</a><span class="sections"><a href="../#papers">Papers</a><a href="../#blog">Technical Blogposts</a><a href="../#essays">Essays</a></span></nav><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label for="darkmode-toggle" tabIndex="-1"><span class="toggle-knob"></span></label></div><button class="btn back-to-top" aria-label="Back to top" hidden>↑ Top</button></header><div class="popover-hint"><div class="post-header"><div class="kicker">Technical Blogpost <span class="date">· October 4, 2025</span></div><h1 class="article-title">Iterative Linear Quadratic Regulators in JAX</h1></div></div></div><article class="popover-hint"><p>A couple months ago I wrote an iLQR solver in JAX and today I decided to open-source it.
+I used Claude Code  for the first time and I’ve never moved so fast in my life.
+I went from a script with one example to a package with a bunch of examples in &lt;1 hr.
+Highly recommend it!</p>
+<p>I also wrote a derivation for LQR and iLQR which I liked more than the stuff I found online because I don’t assume any form for the value function. Instead, I show how the quadratic form arises naturally from the problem formulation.</p>
+<p>Find the repo and pdf <a href="https://github.com/fernandopalafox/iLQR" class="external">here</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">Car Parking</th><th align="center">Cart Pole</th><th align="center">Rocket Landing</th></tr></thead><tbody><tr><td align="center"><img src="../media/test_ilqr_parking.gif" alt="Parking"/></td><td align="center"><img src="../media/test_ilqr_cartpole.gif" alt="Cart-Pole"/></td><td align="center"><img src="../media/test_ilqr_rocket.gif" alt="Rocket"/></td></tr><tr><td align="center"><img src="../media/test_ilqr_parking.png" alt="Parking Plot"/></td><td align="center"><img src="../media/test_ilqr_cartpole.png" alt="Cart-Pole Plot"/></td><td align="center"><img src="../media/test_ilqr_rocket.png" alt="Rocket Plot"/></td></tr></tbody></table></article><nav class="pager" aria-label="More posts"><a class="prev" href="../research/dual"><span class="dir">← Previous</span><span class="t">Why is Dual Control Hard?</span></a><a class="next" href="../research/onoffpolicy"><span class="dir">Next →</span><span class="t">On-Policy vs. Off-Policy Algorithms</span></a></nav></div><div class="right sidebar"></div></div></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="../postscript.js?v=mw6yr0oy" type="module"></script></html>

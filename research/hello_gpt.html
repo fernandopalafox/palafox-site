@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html><head><title>GPTs</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="GPTs"/><meta property="og:description" content="Last weekend’s hack was spent working through Andrej Karpathy’s intro to generative pre-trained transformers (GPTs). Here’s the repo to the code: link and a sample generative output given a newline character after 30’ of training (on my poor laptop’s single GTX 1070): Oppon the time of our mistress! Bolingbroke To the seal&amp;#039;d shepherd of honour-flutted Return to me,ignity o&amp;#039;er throat up on ours."/><meta property="og:image" content="https://palafox.info/static/og-image.png?v=2"/><meta property="og:image:width" content="600"/><meta property="og:image:height" content="600"/><meta name="twitter:card" content="summary"/><link rel="icon" href="../static/icon.png?v=2"/><meta name="description" content="Last weekend’s hack was spent working through Andrej Karpathy’s intro to generative pre-trained transformers (GPTs). Here’s the repo to the code: link and a sample generative output given a newline character after 30’ of training (on my poor laptop’s single GTX 1070): Oppon the time of our mistress! Bolingbroke To the seal&amp;#039;d shepherd of honour-flutted Return to me,ignity o&amp;#039;er throat up on ours."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="../index.css?v=mw6yr0oy" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Instrument Sans:wght@400;700&amp;family=Instrument Sans:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js?v=mw6yr0oy" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`../static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="research/hello_gpt"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"></div><div class="center"><div class="page-header"><header><nav class="site-nav"><a class="home-link" href="..">Fernando Palafox</a><span class="sections"><a href="../#papers">Papers</a><a href="../#blog">Technical Blogposts</a><a href="../#essays">Essays</a></span></nav><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label for="darkmode-toggle" tabIndex="-1"><span class="toggle-knob"></span></label></div><button class="btn back-to-top" aria-label="Back to top" hidden>↑ Top</button></header><div class="popover-hint"><div class="post-header"><div class="kicker">Technical Blogpost <span class="date">· November 20, 2023</span></div><h1 class="article-title">GPTs</h1></div></div></div><article class="popover-hint"><p>Last weekend’s hack was spent working through <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY" class="external">Andrej Karpathy’s intro to generative pre-trained transformers</a> (GPTs).</p>
+<p>Here’s the repo to the code: <a href="https://github.com/fernandopalafox/hello_gpt" class="external">link</a> and a sample generative output given a newline character after 30’ of training (on my poor laptop’s single GTX 1070):</p>
+<pre><code>Oppon the time of our mistress! Bolingbroke
+To the seal'd shepherd of honour-flutted
+Return to me,ignity o'er throat up on ours.
+
+GREY:
+Go, good Margaret, thou artius on, do not forth.
+
+STANLEY:
+Sir, at thou dost not stand in this world,
+In hopest ourselves and smiles, for wholen
+Then I be grave died, though with salt long Henry,
+The a quarrel of Juliet shall war knock.
+
+RICHAMOP:
+Art thou, palace.
+
+KING RICHARD II:
+At Henry, farewell! Prince Edward.
+
+DUKE VINCENTIO:
+Come, come hither, my lord.
+</code></pre>
+<h1 id="thoughts">Thoughts<a aria-hidden="true" tabindex="-1" href="#thoughts" class="internal"> §</a></h1>
+<p>It seems like instrumental to the success of the transformer was a combination of two things:</p>
+<ol>
+<li>Encoding of domain knowledge into the model architecture. In the case of language, the transformer architecture allows the model to understand the sequential nature of language and the connection between context and semantics through the masked attention mechanism.</li>
+<li>Scalability. The architecture is amenable to scaling. See <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" class="external">The Bitter Lesson.</a></li>
+</ol>
+<p>As to how this relates to my research, it gets me thinking about how I can bake domain knowledge about robotics and multi-agent interactions into a scalable neural network architecture. Mega broad question, and many people are probably asking themselves the same thing, I’m sure. But hey, at least I now have a better idea of where to go next.</p>
+<p>It also gets me thinking about what kind of scaling architectures will be most useful in robotics. Incidentally, <a href="https://nishanthjkumar.com/Will-Scaling-Solve-Robotics-Perspectives-from-CoRL-2023/" class="external">here’s a nice blog post by Nishanth Kumar about scaling in robotics</a>.</p>
+<h1 id="whats-next">What’s next<a aria-hidden="true" tabindex="-1" href="#whats-next" class="internal"> §</a></h1>
+<ul>
+<li>More coding! I thought of doing more LeetCode, but I think I’ll just go straight into something a bit more aligned to what I’m interested in. So, for now I’m going to work through all the practical examples of <a href="https://fleuret.org/dlc/" class="external">François Fleuret’s deep-learning course</a></li>
+<li>At some point might be a good idea to revisit the transformer architecture and maybe make a cool diagram/flowchart out of it. I wasn’t satisfied by the ones I found online.</li>
+<li>Continue to get better at control theory and game theory. To do this, I think I’ll join my lab-mate <a href="https://clearoboticslab.github.io/people/kushagra_gupta/index.html" class="external">Kushagra Gupta</a> in reading and working through Bertsekas’ <a href="https://www.mit.edu/~dimitrib/dpbook.html" class="external"><em>Dynamic Programming and Optimal Control</em></a> or perhaps his new book <a href="https://www.mit.edu/~dimitrib/RLbook.html" class="external"><em>Reinforcement Learning and Optimal Control</em></a>.</li>
+</ul></article><nav class="pager" aria-label="More posts"><a class="prev" href="../#blog"><span class="dir">← All posts</span><span class="t">Technical Blogposts</span></a><a class="next" href="../research/friction"><span class="dir">Next →</span><span class="t">Friction and Differentiable Robot Simulators</span></a></nav></div><div class="right sidebar"></div></div></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="../postscript.js?v=mw6yr0oy" type="module"></script></html>

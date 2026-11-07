@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+    <channel>
+      <title>Fernando Palafox</title>
+      <link>https://palafox.info</link>
+      <description>Recent content on Fernando Palafox</description>
+      <generator>Quartz -- quartz.jzhao.xyz</generator>
+      <item>
+    <title>Bookshelf</title>
+    <link>https://palafox.info/bookshelf</link>
+    <guid>https://palafox.info/bookshelf</guid>
+    <description>Some of my favorite books in no particular order. Fun Books § Rainer Maria Rilke Letters to a Young Poet David Foster Wallace Infinite Jest James P. Carse Finite and Infinite Games Douglas Hofstadter I Am a Strange Loop Robert Persig Zen and the Art of Motorcycle Maintenance Mark Manson Models Fyodor Dostoevsky Crime and Punishment Isaac Asimov The Foundation series Neal Stephenson Snow Crash Henry David Thoreu Walden Charlie Awberry Opening Awareness D.</description>
+    <pubDate>Sat, 07 Nov 2026 22:16:49 GMT</pubDate>
+  </item><item>
+    <title>Fernando Palafox</title>
+    <link>https://palafox.info/</link>
+    <guid>https://palafox.info/</guid>
+    <description>Robotics PhD student at UT Austin working on world models, sim-to-real adaptation, and active learning.</description>
+    <pubDate>Sat, 07 Nov 2026 22:16:49 GMT</pubDate>
+  </item><item>
+    <title>Movement</title>
+    <link>https://palafox.info/movement</link>
+    <guid>https://palafox.info/movement</guid>
+    <description>On the joys of movement and stillness Exercise § I’m a big fan of physical movement. In a previous life, I was a obsessed with ultra-distance cycling and running.</description>
+    <pubDate>Sat, 07 Nov 2026 22:16:49 GMT</pubDate>
+  </item><item>
+    <title>Policy Gradient and the Generalized Advantage Estimator</title>
+    <link>https://palafox.info/research/advantage</link>
+    <guid>https://palafox.info/research/advantage</guid>
+    <description>I derive the vanilla policy gradient and then estimate it with the generalized advantage estimator which can parametrically trade between bias and variance.</description>
+    <pubDate>Thu, 23 Oct 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>PILCO and Model-Based RL</title>
+    <link>https://palafox.info/research/dpilco</link>
+    <guid>https://palafox.info/research/dpilco</guid>
+    <description>Notes on PILCO [@deisenroth2011pilco] and deep PILCO [@gal2016improving], two seminal model-based RL papers. Model-based RL and PILCO § Model-based RL learns the dynamics model for the underlying Markov decision process (MDP).</description>
+    <pubDate>Sat, 01 Nov 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Why is Dual Control Hard?</title>
+    <link>https://palafox.info/research/dual</link>
+    <guid>https://palafox.info/research/dual</guid>
+    <description> Footnote from &quot;Control Adaptation via Meta-Learning Dynamics&quot;. Recently I’ve been exploring how to take actions that actively reduce uncertainty.</description>
+    <pubDate>Wed, 06 Nov 2024 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>The Loss of a Dynamical VAE</title>
+    <link>https://palafox.info/research/dvae_elbo</link>
+    <guid>https://palafox.info/research/dvae_elbo</guid>
+    <description>Dynamical variational autoencoders (DVAEs) are a generalization of variational autoencoders (VAEs) for the case where the data is correlated through a hidden dynamical system.</description>
+    <pubDate>Sun, 13 Oct 2024 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Friction and Differentiable Robot Simulators</title>
+    <link>https://palafox.info/research/friction</link>
+    <guid>https://palafox.info/research/friction</guid>
+    <description> Here’s a method, based on differentiable simulators, to compensate for joint friction (or other unmodelled forces). This post is a proof of concept where I used Google’s Brax, a differentiable physics simulator based on Jax, to correct for unmodelled joint friction in a simple pendulum.</description>
+    <pubDate>Sun, 15 Sep 2024 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Value in Contrastive Goal-Conditioned RL</title>
+    <link>https://palafox.info/research/goal-rl</link>
+    <guid>https://palafox.info/research/goal-rl</guid>
+    <description>A note on goal-conditioned RL using contrastive learning, where value is defined by representational similarity to a goal state. In goal-conditioned RL training with contrastive learning, the critic takes three arguments: a current state , an action , and a query state .</description>
+    <pubDate>Sat, 13 Dec 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Gaussian Processes and Meta-Learning</title>
+    <link>https://palafox.info/research/gps</link>
+    <guid>https://palafox.info/research/gps</guid>
+    <description>I’ve been looking into ways of incorporating epistemic uncertainty into learned world models in a way that fits nicely with a control problem. David suggested I look into combining neural networks with Gaussian processes (GPs) like Harrison et al.</description>
+    <pubDate>Tue, 29 Oct 2024 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>GPTs</title>
+    <link>https://palafox.info/research/hello_gpt</link>
+    <guid>https://palafox.info/research/hello_gpt</guid>
+    <description>Last weekend’s hack was spent working through Andrej Karpathy’s intro to generative pre-trained transformers (GPTs). Here’s the repo to the code: link and a sample generative output given a newline character after 30’ of training (on my poor laptop’s single GTX 1070): Oppon the time of our mistress! Bolingbroke To the seal&#039;d shepherd of honour-flutted Return to me,ignity o&#039;er throat up on ours.</description>
+    <pubDate>Mon, 20 Nov 2023 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Iterative Linear Quadratic Regulators in JAX</title>
+    <link>https://palafox.info/research/ilqr</link>
+    <guid>https://palafox.info/research/ilqr</guid>
+    <description>A couple months ago I wrote an iLQR solver in JAX and today I decided to open-source it. I used Claude Code for the first time and I’ve never moved so fast in my life.</description>
+    <pubDate>Sat, 04 Oct 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>On Bayesian Neural Networks and Martingale Posteriors</title>
+    <link>https://palafox.info/research/martingale</link>
+    <guid>https://palafox.info/research/martingale</guid>
+    <description>Spent the afternoon reading “Martingale Posterior Neural Networks for Fast Sequential Decision Making” [@duran-martin2025martingale] which focuses on algorithms for online learning of neural net parameters used for Bayesian decision making.</description>
+    <pubDate>Mon, 17 Nov 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Model Uncertainty Without Priors (Part 1)</title>
+    <link>https://palafox.info/research/martingale1</link>
+    <guid>https://palafox.info/research/martingale1</guid>
+    <description>This is Part 1 of a two-part post where I describe how to use martingales to quantify model uncertainty without a Bayesian prior. Part 1 is not very technical: I motivate the need for models that describe real-world phenomena, and then I describe the role of scientists in model creation.</description>
+    <pubDate>Tue, 07 Jul 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Model Uncertainty Without Priors (Part 2)</title>
+    <link>https://palafox.info/research/martingale2</link>
+    <guid>https://palafox.info/research/martingale2</guid>
+    <description>In Part 1 of this post, I described why and how to find parametric models that describe real-world phenomena, and ended with a question: once you have a model, how certain are you that your parameter estimate is the right one? In this post, I’ll introduce an informal notion of uncertainty and describe how to quantify it using martingales, without a Bayesian prior.</description>
+    <pubDate>Mon, 13 Jul 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>MAX: a multi-agent reinforcement learning library in JAX</title>
+    <link>https://palafox.info/research/max</link>
+    <guid>https://palafox.info/research/max</guid>
+    <description>Spent the last couple of weeks writing MAX, a reinforcement learning library in JAX. My goal was to learn more about: PPO and model-free RL. The right abstractions for multi-agent RL.</description>
+    <pubDate>Thu, 13 Nov 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Active Learning in Autonomous Highway Merging</title>
+    <link>https://palafox.info/research/mridm</link>
+    <guid>https://palafox.info/research/mridm</guid>
+    <description>I apply the framework from my paper, Generalized Information Gathering Under Dynamics Uncertainty, to an autonomous highway merging scenario using the MRIDM driver model.</description>
+    <pubDate>Fri, 06 Feb 2026 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>On-Policy vs. Off-Policy Algorithms</title>
+    <link>https://palafox.info/research/onoffpolicy</link>
+    <guid>https://palafox.info/research/onoffpolicy</guid>
+    <description>I go through the difference between on-policy and off-policy algorithms for reinforcement learning Notation: At time we define state as , action as and reward as .</description>
+    <pubDate>Tue, 21 Oct 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Plasticity as Adaptation vs. Informational Influence</title>
+    <link>https://palafox.info/research/plasticity</link>
+    <guid>https://palafox.info/research/plasticity</guid>
+    <description>“Plasticity as the Mirror of Empowerment” [@abel2025plasticity] defines information-theoretic measures for plasticity (how much an agent is influence by its environment) and empowerment (how much the agent can influence the environment).</description>
+    <pubDate>Thu, 20 Nov 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Is the Data-Generating Distribution in the Room With Us?</title>
+    <link>https://palafox.info/research/population</link>
+    <guid>https://palafox.info/research/population</guid>
+    <description>I look into Ben Recht’s post questioning the existence of the “data-generating distribution” (DGD), derive an optimal predictor with/without it, and then go into how it’s the sampling mechanism which introduces stochasticity into ML (and not the DGD).</description>
+    <pubDate>Fri, 12 Dec 2025 00:00:00 GMT</pubDate>
+  </item><item>
+    <title>Tabular Q-Learning</title>
+    <link>https://palafox.info/research/tabular</link>
+    <guid>https://palafox.info/research/tabular</guid>
+    <description>Today I made a very simple implementation of Q-learning algorithm that learns a tabular function using first-visit, constant alpha updates, and Monte Carlo rollouts based on an epsilon-greedy policy.</description>
+    <pubDate>Wed, 30 Oct 2024 00:00:00 GMT</pubDate>
+  </item>
+    </channel>
+  </rss>
