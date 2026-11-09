@@ -587,9 +587,14 @@ var getOpts = ({ target }) => {
   if ("routerIgnore" in a.dataset)
     return;
   const { href } = a;
+  if (a.hasAttribute("download") || a.target && a.target !== "_self")
+    return;
   if (!isLocalUrl(href))
     return;
-  return { url: new URL(href), scroll: "routerNoscroll" in a.dataset ? false : void 0 };
+  const url = new URL(href);
+  if (/\.pdf$/i.test(url.pathname))
+    return;
+  return { url, scroll: "routerNoscroll" in a.dataset ? false : void 0 };
 };
 function notifyNav(url) {
   const event = new CustomEvent("nav", { detail: { url } });
@@ -597,12 +602,24 @@ function notifyNav(url) {
 }
 var p2;
 async function navigate(url, isBack = false) {
-  p2 = p2 || new DOMParser();
-  const contents = await fetch(`${url}`).then((res) => res.text()).catch(() => {
+  if (/\.pdf$/i.test(url.pathname)) {
     window.location.assign(url);
-  });
+    return;
+  }
+  const response = await fetch(`${url}`).catch(() => void 0);
+  if (!response) {
+    window.location.assign(url);
+    return;
+  }
+  const contentType = response.headers.get("content-type")?.split(";")[0].trim();
+  if (contentType !== "text/html" && contentType !== "application/xhtml+xml") {
+    window.location.assign(url);
+    return;
+  }
+  const contents = await response.text();
   if (!contents)
     return;
+  p2 = p2 || new DOMParser();
   const html = p2.parseFromString(contents, "text/html");
   let title = html.querySelector("title")?.textContent;
   if (title) {
